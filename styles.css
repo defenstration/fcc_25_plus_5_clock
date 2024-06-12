@@ -12,7 +12,7 @@ body {
     align-items: center;
 }
 
-#modifier-wrapper {
+#modifier-wrapper, #timer-label {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -58,4 +58,11 @@ body {
 
 #time-left {
     font-size: 50px;
+}
+
+.btn {
+    border: 5px solid transparent;
+    border-radius: 5px;
+    padding: 5px;
+
 }
