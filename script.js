@@ -108,27 +108,35 @@ startStopBtn.addEventListener("click", () => {
 const count = () => {
     if (countdown === true) {
             seconds -= 1
+
             timeLeft.innerText = `${minutes < 10 ? '0' : ''}${minutes}:${seconds < 10 ? '0' : ''}${seconds}`
 
             if (seconds === 0 && minutes === 0) {
                 audio.play() 
+                console.log("switch")
+            
+
                 if (whichTimer === "session") {
                     whichTimer = "break"
                     minutes = breakTime
                     sessionLabel.textContent = "Break"
+                    timeLeft.innerText = `${minutes < 10 ? '0' : ''}${minutes}:${seconds < 10 ? '0' : ''}${seconds}`
 
                 } else if (whichTimer === "break") {
                     whichTimer = "session"
                     minutes = sessionTime
                     sessionLabel.textContent = "Session"
-
+                    timeLeft.innerText = `${minutes < 10 ? '0' : ''}${minutes}:${seconds < 10 ? '0' : ''}${seconds}`
                 }
-
+                
             } else if (seconds <= 0){
                 seconds = 60
                 timeLeft.innerText = `${minutes}:00`
                 minutes -= 1
-            } 
+            }
+
+
+
         }
     }
         
