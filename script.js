@@ -3,7 +3,9 @@ const breakLength = document.getElementById("break-length")
 const timeLeft = document.getElementById("time-left")
 const changeButtons = document.querySelectorAll(".change-btn")
 const resetBtn = document.getElementById('reset')
-const startStopBtn = document.getElementById('start-stop')
+const startStopBtn = document.getElementById('start_stop')
+const audio = document.getElementById('beep')
+const sessionLabel = document.getElementById('timer-label')
 
 let hours = ''
 let minutes = ''
@@ -14,13 +16,13 @@ let whichTimer = "session"
 
 // setting onload properties
 window.onload = () => {
-    breakTime = 1
-    sessionTime = 2
+    breakTime = 5
+    sessionTime = 25
     breakLength.textContent = `${breakTime}`
     sessionLength.textContent = `${sessionTime}`
     minutes = sessionTime
-    seconds = '00'
-    timeLeft.innerText = `${minutes}:${seconds}`
+    seconds = 0
+    timeLeft.innerText = `${minutes < 10 ? '0' : ''}${minutes}:${seconds < 10 ? '0' : ''}${seconds}`
     countdown = false
 }
 
@@ -37,8 +39,8 @@ changeButtons.forEach((btn) => {
 
             case "break-decrement":
                 breakTime -= 1
-                if (breakTime <= 0) {
-                    breakTime = 0
+                if (breakTime <= 1) {
+                    breakTime = 1
                 }
                 breakLength.textContent = `${breakTime}`
                 break;
@@ -58,17 +60,17 @@ changeButtons.forEach((btn) => {
                 }
                 sessionLength.textContent = `${sessionTime}`
                 minutes = sessionTime
-                timeLeft.textContent = `${minutes}:${seconds}`
+                timeLeft.textContent = `${minutes < 10 ? '0' : ''}${minutes}:${seconds < 10 ? '0' : ''}${seconds}`
                 break;
 
             case "session-decrement":
                 sessionTime -= 1
-                if (sessionTime <= 0) {
-                    sessionTime = 0
+                if (sessionTime <= 1) {
+                    sessionTime = 1
                 }
                 sessionLength.textContent = `${sessionTime}`
                 minutes = sessionTime
-                timeLeft.textContent = `${minutes}:${seconds}`
+                timeLeft.textContent = `${minutes < 10 ? '0' : ''}${minutes}:${seconds < 10 ? '0' : ''}${seconds}`
                 break;          
             
         }
@@ -77,14 +79,17 @@ changeButtons.forEach((btn) => {
 
 // reset button
 resetBtn.addEventListener('click', () =>{
-    breakTime = 1
-    sessionTime = 2
+    breakTime = 5
+    sessionTime = 25
     breakLength.textContent = `${breakTime}`
     sessionLength.textContent = `${sessionTime}`
     minutes = sessionTime
-    seconds = '00'
-    timeLeft.innerText = `${minutes}:${seconds}`
+    seconds = '0'
+    timeLeft.innerText = `${minutes < 10 ? '0' : ''}${minutes}:${seconds < 10 ? '0' : ''}${seconds}`
+    sessionLabel.textContent = "Session"
     countdown = false
+    audio.pause()
+    audio.currentTime = 0
 })
 
 // start stop button
@@ -103,21 +108,22 @@ startStopBtn.addEventListener("click", () => {
 const count = () => {
     if (countdown === true) {
             seconds -= 1
-            if (seconds < 10) {
-                timeLeft.innerText = `${minutes}:0${seconds}`
-            } else {
-            timeLeft.innerText = `${minutes}:${seconds}`
-            }
+            timeLeft.innerText = `${minutes < 10 ? '0' : ''}${minutes}:${seconds < 10 ? '0' : ''}${seconds}`
 
-            if (seconds === 0 && minutes === 0) { 
+            if (seconds === 0 && minutes === 0) {
+                audio.play() 
                 if (whichTimer === "session") {
                     whichTimer = "break"
                     minutes = breakTime
+                    sessionLabel.textContent = "Break"
 
                 } else if (whichTimer === "break") {
                     whichTimer = "session"
                     minutes = sessionTime
+                    sessionLabel.textContent = "Session"
+
                 }
+
             } else if (seconds <= 0){
                 seconds = 60
                 timeLeft.innerText = `${minutes}:00`
