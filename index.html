@@ -10,15 +10,23 @@
 
     <div id = "clock-wrapper">
 
-        <div id = "break-label"></div>
-        <button id = "break-decrement"></button>
-        <p id = "break-length"></p>
-        <button id = "break-increment"></button>
+        <div id = "modifier-wrapper">
 
-        <div id = "session-label"></div>
-        <button id = "session-decrement"></button>
-        <p id = "session-length"></p>
-        <button id = "session-increment"></button>
+            <div id = "break-wrapper">
+                <div id = "break-label">Break Length</div>
+                <button id = "break-decrement" class = "change-btn">-</button>
+                <p id = "break-length">default</p>
+                <button id = "break-increment" class = "change-btn">+</button>
+            </div>
+
+            <div id = "session-wrapper">
+                <div id = "session-label" >Session Length</div>
+                <button id = "session-decrement"class = "change-btn">-</button>
+                <p id = "session-length" >default</p>
+                <button id = "session-increment" class = "change-btn">+</button>
+            </div>
+            
+        </div>    
 
         <div id = "timer-wrapper">
             <h3 id = "timer-label">Session</h3>
