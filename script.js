@@ -112,21 +112,22 @@ const count = () => {
             timeLeft.innerText = `${minutes < 10 ? '0' : ''}${minutes}:${seconds < 10 ? '0' : ''}${seconds}`
 
             if (seconds === 0 && minutes === 0) {
-                audio.play() 
                 console.log("switch")
-            
-
+                audio.play().catch(error => {
+                    console.error("Audio playback failed:", error);
+                });
                 if (whichTimer === "session") {
                     whichTimer = "break"
-                    minutes = breakTime
-                    sessionLabel.textContent = "Break"
-                    timeLeft.innerText = `${minutes < 10 ? '0' : ''}${minutes}:${seconds < 10 ? '0' : ''}${seconds}`
+                    sessionLabel.textContent = `${whichTimer}`
+                    minutes = breakTime < 10 ? '0' + breakTime : breakTime
+                    console.log(minutes)
 
                 } else if (whichTimer === "break") {
                     whichTimer = "session"
-                    minutes = sessionTime
-                    sessionLabel.textContent = "Session"
-                    timeLeft.innerText = `${minutes < 10 ? '0' : ''}${minutes}:${seconds < 10 ? '0' : ''}${seconds}`
+                    sessionLabel.textContent = `${whichTimer}`
+                    minutes = sessionTime < 10 ? '0' + sessionTime : sessionTime
+                    console.log(minutes)
+                    
                 }
                 
             } else if (seconds <= 0){
